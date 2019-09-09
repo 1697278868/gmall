@@ -57,4 +57,29 @@ public class ManageController {
         BaseAttrInfo baseAttrInfo = manageService.getAttrValueListByAttrId(attrId);
         return baseAttrInfo.getAttrValueList();
     }
+
+
+    //xhr.js:178 GET http://localhost:8082/spuList?catalog3Id=61
+    @GetMapping("spuList")
+    public List<SpuInfo> getSpuList(String catalog3Id ){
+       List<SpuInfo>  spuList =  manageService.getSpuList(catalog3Id);
+        return spuList;
+    }
+
+    //POST http://localhost:8082/baseSaleAttrList
+    @PostMapping("baseSaleAttrList")
+    public List<BaseSaleAttr> baseSaleAttrList(){
+        List<BaseSaleAttr> baseSaleAttrList = manageService.getBaseSaleAttrList();
+        return baseSaleAttrList;
+    }
+
+
+    //http://localhost:8082/saveSpuInfo
+    @PostMapping("saveSpuInfo")
+    public String saveSpuInfo(@RequestBody SpuInfo spuInfo){
+        System.out.println(spuInfo);
+
+        manageService.saveSpuInfo(spuInfo);
+        return "success";
+    }
 }
