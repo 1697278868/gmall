@@ -25,4 +25,10 @@ public interface ManageService {
     List<BaseSaleAttr> getBaseSaleAttrList();
     //保存spu
     void saveSpuInfo(SpuInfo spuInfo);
+    //根据spuid获取图片
+    List<SpuImage> getSupImageListBySpuId(String spuId);
+    //根据supid获取销售属性
+    List<SpuSaleAttr> getSpuSaleAttrListBySpuId(String spuId);
+
+    void saveSkuInfo(SkuInfo skuInfo);
 }

@@ -82,4 +82,19 @@ public class ManageController {
         manageService.saveSpuInfo(spuInfo);
         return "success";
     }
+
+    //chunk-0e20.3d7336d6.js:8 GET http://manage.gmall.com/spuImageList?spuId=58 404
+    @GetMapping("spuImageList")
+    public List<SpuImage> spuImageList(String spuId){
+        List<SpuImage> supImageList = manageService.getSupImageListBySpuId(spuId);
+        return supImageList;
+    }
+
+    //chunk-0e20.3d7336d6.js:8 GET http://manage.gmall.com/spuSaleAttrList?spuId=58 404
+    @GetMapping("spuSaleAttrList")
+    public List<SpuSaleAttr> spuSaleAttrList(String spuId){
+        List<SpuSaleAttr> spuSaleAttrList = manageService.getSpuSaleAttrListBySpuId(spuId);
+        return spuSaleAttrList;
+    }
+
 }
