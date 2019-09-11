@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ManagerServiceImpl implements ManageService {
@@ -219,5 +221,34 @@ public class ManagerServiceImpl implements ManageService {
             skuSaleAttrValue.setSkuId(skuInfoId);
             skuSaleAttrValueMapper.insertSelective(skuSaleAttrValue);
         }
+    }
+
+    @Override
+    public SkuInfo getSkuInfoById(String skuId) {
+        SkuInfo skuInfo = skuInfoMapper.selectByPrimaryKey(skuId);
+
+        SkuImage skuImage = new SkuImage();
+        skuImage.setSkuId(skuId);
+        List<SkuImage> skuImageList = skuImageMapper.select(skuImage);
+
+        skuInfo.setSkuImageList(skuImageList);
+        return skuInfo;
+    }
+
+    @Override
+    public List<SpuSaleAttr> spuSaleAttrListIsChecked(String spuId, String skuId) {
+        return spuSaleAttrMapper.spuSaleAttrValueListIsChecked(spuId,skuId);
+    }
+
+    @Override
+    public Map getskuValueIdsMap(String spuId) {
+        List<Map> saleAttrValuesBySpu = skuSaleAttrValueMapper.getSaleAttrValuesBySpu(spuId);
+        HashMap skuValueIdsMap  = new HashMap<>();
+        for (Map map : saleAttrValuesBySpu) {
+            String valueIds = (String) map.get("value_ids");
+            String skuId =(Long)map.get("sku_id")+ "";
+            skuValueIdsMap.put(valueIds,skuId);
+        }
+        return skuValueIdsMap;
     }
 }

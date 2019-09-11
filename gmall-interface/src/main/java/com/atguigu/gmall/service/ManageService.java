@@ -3,6 +3,7 @@ package com.atguigu.gmall.service;
 import com.atguigu.gmall.bean.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ManageService {
     //获得一级所有的分类列表
@@ -29,6 +30,12 @@ public interface ManageService {
     List<SpuImage> getSupImageListBySpuId(String spuId);
     //根据supid获取销售属性
     List<SpuSaleAttr> getSpuSaleAttrListBySpuId(String spuId);
-
+    //保存sku
     void saveSkuInfo(SkuInfo skuInfo);
+    //根据skuid获取skuInfo
+    SkuInfo getSkuInfoById(String skuId);
+    //根据skuid和spuid获取销售属性和sku的销售属性
+    List<SpuSaleAttr> spuSaleAttrListIsChecked(String spuId, String skuId);
+    //根据spu获取spu下的sku的销售属性id列表
+    Map getskuValueIdsMap(String spuId);
 }
