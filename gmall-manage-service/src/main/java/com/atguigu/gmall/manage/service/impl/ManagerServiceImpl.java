@@ -226,12 +226,21 @@ public class ManagerServiceImpl implements ManageService {
     @Override
     public SkuInfo getSkuInfoById(String skuId) {
         SkuInfo skuInfo = skuInfoMapper.selectByPrimaryKey(skuId);
-
+        //获取sku的图片列表
+        if(skuInfo == null){
+            return null;
+        }
         SkuImage skuImage = new SkuImage();
         skuImage.setSkuId(skuId);
         List<SkuImage> skuImageList = skuImageMapper.select(skuImage);
-
         skuInfo.setSkuImageList(skuImageList);
+
+        //获取sku的平台属性值
+        SkuAttrValue skuAttrValue = new SkuAttrValue();
+        skuAttrValue.setSkuId(skuId);
+        List<SkuAttrValue> skuAttrValueList = skuAttrValueMapper.select(skuAttrValue);
+        skuInfo.setSkuAttrValueList(skuAttrValueList);
+
         return skuInfo;
     }
 
@@ -250,5 +259,20 @@ public class ManagerServiceImpl implements ManageService {
             skuValueIdsMap.put(valueIds,skuId);
         }
         return skuValueIdsMap;
+    }
+
+    @Override
+    public List<BaseAttrInfo> getBaseAttrInfoByValueIds(List<String> valueIdList) {
+        if (valueIdList == null || valueIdList.size()==0){
+            return null;
+        }
+        String valueIds = "";
+        for (int i = 0; i <valueIdList.size()-1 ; i++) {
+            valueIds+=valueIdList.get(i);
+            valueIds+=",";
+        }
+        valueIds+=valueIdList.get(valueIdList.size()-1);
+        List<BaseAttrInfo> baseAttrInfoList = baseAttrInfoMapper.selectAttrInfoListByValueIds(valueIds);
+        return baseAttrInfoList;
     }
 }

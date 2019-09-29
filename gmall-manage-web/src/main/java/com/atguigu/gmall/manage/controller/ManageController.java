@@ -2,7 +2,10 @@ package com.atguigu.gmall.manage.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.atguigu.gmall.bean.*;
+import com.atguigu.gmall.bean.es.SkuLsInfo;
+import com.atguigu.gmall.service.ListService;
 import com.atguigu.gmall.service.ManageService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +17,8 @@ public class ManageController {
     @Reference
     ManageService manageService;
 
+    @Reference
+    ListService listService;
 
     //post:http://localhost:8082/getCatalog1
     @PostMapping("getCatalog1")
@@ -97,4 +102,13 @@ public class ManageController {
         return spuSaleAttrList;
     }
 
+    @GetMapping("onSale")
+    public String onSale(String skuId){
+        SkuInfo skuInfo = manageService.getSkuInfoById(skuId);
+        SkuLsInfo skuLsInfo = new SkuLsInfo();
+        BeanUtils.copyProperties(skuInfo,skuLsInfo);
+        listService.saveSkuInfo(skuLsInfo);
+        return "success";
+    }
 }
+

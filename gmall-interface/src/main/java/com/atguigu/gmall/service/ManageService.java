@@ -38,4 +38,7 @@ public interface ManageService {
     List<SpuSaleAttr> spuSaleAttrListIsChecked(String spuId, String skuId);
     //根据spu获取spu下的sku的销售属性id列表
     Map getskuValueIdsMap(String spuId);
+
+    //根据平台属性的ids获取平台属性
+    List<BaseAttrInfo> getBaseAttrInfoByValueIds(List<String> valueIdList);
 }

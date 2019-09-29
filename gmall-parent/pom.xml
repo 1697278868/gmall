@@ -13,6 +13,7 @@
         <module>../gmall-util-common</module>
         <module>../gmall-util-web</module>
         <module>../gmall-util-service</module>
+        <module>../gmall-util-service</module>
     </modules>
     <packaging>pom</packaging>
 
